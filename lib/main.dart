@@ -37,11 +37,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _handleImageTap() {
-    print('Image tapped!');
-  }
-
+  AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
+
+  void _handleImageTap() {
+    audioPlayer.play(UrlSource('http://localhost:8070/audio/16k16bit.mp3'));
+  }
 
   void togglePlayPause() {
     setState(() {

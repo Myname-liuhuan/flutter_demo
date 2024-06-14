@@ -13,6 +13,8 @@
                 "chrome",
                 "--web-renderer",
                 "html",
+                "--web-port",
+                "8070"
             ]
         },
         {
