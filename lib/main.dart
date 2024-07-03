@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:flutter_application_1/UI/image_tile.dart';
 import 'package:flutter_application_1/music/music_play.dart';
@@ -37,17 +37,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
+  final player = AudioPlayer();
 
   void _handleImageTap() {
-    audioPlayer.play(UrlSource('http://localhost:8070/audio/16k16bit.mp3'));
+    
   }
 
-  void togglePlayPause() {
+  Future<void> togglePlayPause() async {
     setState(() {
       isPlaying = !isPlaying;
     });
+
+    await player.setUrl('https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3');
+    player.play();
+
   }
 
   void playNext() {
