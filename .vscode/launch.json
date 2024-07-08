@@ -14,7 +14,8 @@
                 "--web-renderer",
                 "html",
                 "--web-port",
-                "8070"
+                "8070",
+                "--test-type --ignore-certificate-errors"
             ]
         },
         {

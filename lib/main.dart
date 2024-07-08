@@ -41,7 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final player = AudioPlayer();
 
   void _handleImageTap() {
-    
+      //判断是否是在ios下运行
+      if (Theme.of(context).platform == TargetPlatform.iOS) {
+        // 在iOS下运行时，使用系统播放器播放音频
+        player.play();
+      } else {
+        // 在其他平台下运行时，使用FlutterAudioPlayer播放音频
+        togglePlayPause();
+      }
   }
 
   Future<void> togglePlayPause() async {
@@ -49,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
       isPlaying = !isPlaying;
     });
 
-    await player.setUrl('https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3');
+   // await player.setUrl('https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3');
+    await player.setUrl('https://43.142.126.219/audio/16k16bit.mp3');
     player.play();
 
   }
