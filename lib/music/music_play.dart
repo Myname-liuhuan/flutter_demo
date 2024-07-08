@@ -6,6 +6,9 @@ class MusicPlay extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback onPrevious;
 
+  //当前播放音频地址
+  static String nowUrl = "";
+
   const MusicPlay({
     Key? key,
     required this.isPlaying,

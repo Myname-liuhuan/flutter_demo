@@ -40,26 +40,33 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isPlaying = false;
   final player = AudioPlayer();
 
-  void _handleImageTap() {
-      //判断是否是在ios下运行
-      if (Theme.of(context).platform == TargetPlatform.iOS) {
-        // 在iOS下运行时，使用系统播放器播放音频
-        player.play();
-      } else {
-        // 在其他平台下运行时，使用FlutterAudioPlayer播放音频
-        togglePlayPause();
-      }
+  //图片点击事件
+  Future<void> _handleImageTap() async {
+      //点击图片后默认播放指定声音
+      // String url =  "https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3";
+      String url = "https://43.142.126.219/audio/16k16bit.mp3";
+      await player.setUrl(url);
+      player.play();
+      setState(() {
+        isPlaying = true;
+      });
+      MusicPlay.nowUrl = url;
   }
 
+  //播放/暂停
   Future<void> togglePlayPause() async {
-    setState(() {
-      isPlaying = !isPlaying;
-    });
+    if(MusicPlay.nowUrl == ""){
+      return;
+    }
 
-   // await player.setUrl('https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3');
-    await player.setUrl('https://43.142.126.219/audio/16k16bit.mp3');
-    player.play();
-
+    if (isPlaying) {
+      await player.pause();
+      setState(() {
+        isPlaying = false;
+      });
+    }else{
+      player.play();
+    }
   }
 
   void playNext() {
