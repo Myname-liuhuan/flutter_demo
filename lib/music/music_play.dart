@@ -5,6 +5,10 @@ class MusicPlay extends StatelessWidget {
   final VoidCallback onPlayPause;
   final VoidCallback onNext;
   final VoidCallback onPrevious;
+  final String songTitle;
+  final String songDuration;
+  final String currentProgress;
+  final String thumbnailUrl;
 
   //当前播放音频地址
   static String nowUrl = "";
@@ -15,6 +19,10 @@ class MusicPlay extends StatelessWidget {
     required this.onPlayPause,
     required this.onNext,
     required this.onPrevious,
+    required this.songTitle,
+    required this.songDuration,
+    required this.currentProgress,
+    required this.thumbnailUrl,
   }) : super(key: key);
 
   @override
@@ -33,8 +41,37 @@ class MusicPlay extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30.0),
+            child: Image.network(
+              thumbnailUrl,
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(width: 8.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                songTitle,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(currentProgress),
+                  Text(' / '),
+                  Text(songDuration),
+                ],
+              ),
+            ],
+          ),
+          Spacer(),
           IconButton(
             icon: Icon(Icons.skip_previous),
             onPressed: onPrevious,

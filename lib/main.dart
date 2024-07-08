@@ -38,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isPlaying = false;
+
   final player = AudioPlayer();
 
   //图片点击事件
@@ -108,6 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
               onPlayPause: togglePlayPause,
               onNext: playNext,
               onPrevious: playPrevious,
+              songTitle: "龙卷风-dzq",
+              songDuration: "5",
+              currentProgress: "3",
+              thumbnailUrl: "https://www.runoob.com/wp-content/themes/runoob/assets/images/qrcode.png",
+
             ),
           ),
         ],
