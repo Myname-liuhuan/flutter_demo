@@ -34,6 +34,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.2
   # audioplayers: ^6.0.0
   just_audio: ^0.9.34
+  dio: ^4.0.4
 
 
 dev_dependencies:
