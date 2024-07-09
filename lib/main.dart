@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
-import 'package:flutter_application_1/UI/image_tile.dart';
-import 'package:flutter_application_1/music/music_play.dart';
+import 'package:flutter_application_1/pages/tile/image_tile.dart';
+import 'package:flutter_application_1/pages/music/music_play.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() {
