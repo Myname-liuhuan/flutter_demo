@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'image_tile_provider.dart';  // Adjust the import according to your file structure
 
 class ImageTile extends StatelessWidget {
-  final String imageUrl;
-  final double width;
-  final double height;
-  final VoidCallback onTap; // 点击事件回调
+  final VoidCallback onTap; // Click event callback
 
-  ImageTile({
-    required this.imageUrl,
-    this.width = 100.0,
-    this.height = 100.0,
-    required this.onTap,
-  });
+  ImageTile({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ImageTileProvider>(context);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: width,
-        height: height,
+        width: provider.width,
+        height: provider.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
@@ -30,7 +26,7 @@ class ImageTile extends StatelessWidget {
             ),
           ],
           image: DecorationImage(
-            image: NetworkImage(imageUrl),
+            image: NetworkImage(provider.imageUrl),
             fit: BoxFit.cover,
           ),
         ),

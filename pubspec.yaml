@@ -35,6 +35,7 @@ dependencies:
   # audioplayers: ^6.0.0
   just_audio: ^0.9.34
   dio: ^4.0.4
+  provider: ^6.0.0
 
 
 dev_dependencies:

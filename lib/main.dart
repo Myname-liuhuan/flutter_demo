@@ -4,6 +4,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:flutter_application_1/pages/tile/image_tile.dart';
 import 'package:flutter_application_1/pages/music/music_play.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+
+import 'pages/tile/image_tile_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,9 +40,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //播放器状态·
   bool isPlaying = false;
-
+  //播放插件
   final player = AudioPlayer();
+  //播放列表
+  List<Map<String, dynamic>> playList = [];
+  
 
   //图片点击事件
   Future<void> _handleImageTap() async {
@@ -78,6 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // Implement play previous functionality
   }
 
+  //初始化图片页面
+  @override
+  void initState() {
+    super.initState();
+   
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,17 +102,23 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: [
           // Your main content here
-           MasonryGridView.count(
+          MasonryGridView.count(
               crossAxisCount: 4,
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
               itemBuilder: (context, index) {
-                return ImageTile(
-                  imageUrl: 'https://www.runoob.com/wp-content/themes/runoob/assets/images/qrcode.png', 
-                  onTap: _handleImageTap
-                  );
+                return ChangeNotifierProvider(
+                  create: (context) => ImageTileProvider(
+                    imageUrl: 'https://example.com/image_$index.jpg',
+                  ),
+                  child: ImageTile(
+                    onTap: () {
+                      // Handle tap event
+                    },
+                  ),
+                );
               },
-            ),
+          ),
           Positioned(
             bottom: 20,
             left: 20,
