@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_application_1",
+            "name": "flutter_demo",
             "request": "launch",
             "type": "dart",
             "args": [
@@ -19,13 +19,13 @@
             ]
         },
         {
-            "name": "flutter_application_1 (profile mode)",
+            "name": "flutter_demo (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "flutter_application_1 (release mode)",
+            "name": "flutter_demo (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

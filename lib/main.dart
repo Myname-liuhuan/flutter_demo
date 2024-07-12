@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'dart:developer' as developer;
+
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
-import 'package:flutter_application_1/pages/tile/image_tile.dart';
-import 'package:flutter_application_1/pages/music/music_play.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/tile/image_tile.dart';
+import 'pages/music/music_play.dart';
+import 'common/network/request_client.dart';
 import 'pages/tile/image_tile_provider.dart';
 
 void main() {
@@ -46,7 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
   final player = AudioPlayer();
   //播放列表
   List<Map<String, dynamic>> playList = [];
+
   
+  Future<void> _initImage() async {
+    //网络请求获取图片列表
+    RequestClient fRequestClient = RequestClient();
+    final response = await fRequestClient.request("/music/pageList");
+    final parsedJson  = jsonDecode(response);
+    developer.log(response);
+   
+  }
 
   //图片点击事件
   Future<void> _handleImageTap() async {
@@ -87,9 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //初始化图片页面
   @override
-  void initState() {
+  void initState()  {
     super.initState();
-   
+    _initImage();
   }
 
   @override
@@ -109,12 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 return ChangeNotifierProvider(
                   create: (context) => ImageTileProvider(
-                    imageUrl: 'https://example.com/image_$index.jpg',
+                    imageUrl: 'https://www.runoob.com/wp-content/themes/runoob/assets/images/qrcode.png',
                   ),
                   child: ImageTile(
-                    onTap: () {
-                      // Handle tap event
-                    },
+                    onTap: _handleImageTap
                   ),
                 );
               },

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_application_1/common/network/RequestConfig.dart';
+import 'package:flutter_application_1/common/network/request_config.dart';
 
 RequestClient requestClient = RequestClient();
 
@@ -12,7 +12,7 @@ class RequestClient {
     );
   }
 
-  Future<dynamic> request(
+  Future<String> request(
       String url, {
       String method = "GET",
       Map<String, dynamic>? queryParameters,
