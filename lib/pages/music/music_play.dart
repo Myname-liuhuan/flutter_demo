@@ -10,8 +10,6 @@ class MusicPlay extends StatelessWidget {
   final String currentProgress;
   final String thumbnailUrl;
 
-  //当前播放音频地址
-  static String nowUrl = "";
 
   const MusicPlay({
     Key? key,

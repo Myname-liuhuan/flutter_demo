@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:developer' as developer;
-
-
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -50,16 +46,23 @@ class _MyHomePageState extends State<MyHomePage> {
   //播放插件
   final player = AudioPlayer();
   //播放列表
-  List<Map<String, dynamic>> playList = [];
+  List<Map> playList = [];
 
   
   Future<void> _initImage() async {
     //网络请求获取图片列表
     RequestClient fRequestClient = RequestClient();
     final response = await fRequestClient.request("/music/pageList");
-    final parsedJson  = jsonDecode(response);
-    developer.log(response);
-   
+    if(response["code"] != 200){
+        return;
+    }else{
+      Map data = response["data"];
+      setState(() {
+          for(int i = 0; i < data["records"].length; i++){
+            playList.add(data["records"][i]);
+          }
+      });
+    }
   }
 
   //图片点击事件
@@ -72,14 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         isPlaying = true;
       });
-      MusicPlay.nowUrl = url;
   }
 
   //播放/暂停
   Future<void> togglePlayPause() async {
-    if(MusicPlay.nowUrl == ""){
-      return;
-    }
+    
 
     if (isPlaying) {
       await player.pause();
@@ -120,10 +120,11 @@ class _MyHomePageState extends State<MyHomePage> {
               crossAxisCount: 4,
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
+              itemCount: playList.length,
               itemBuilder: (context, index) {
                 return ChangeNotifierProvider(
                   create: (context) => ImageTileProvider(
-                    imageUrl: 'https://www.runoob.com/wp-content/themes/runoob/assets/images/qrcode.png',
+                    imageUrl: playList[index]["imageUrl"],
                   ),
                   child: ImageTile(
                     onTap: _handleImageTap

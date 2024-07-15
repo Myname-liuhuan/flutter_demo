@@ -12,7 +12,7 @@ class RequestClient {
     );
   }
 
-  Future<String> request(
+  Future<Map> request(
       String url, {
       String method = "GET",
       Map<String, dynamic>? queryParameters,
