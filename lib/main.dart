@@ -47,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final player = AudioPlayer();
   //播放列表
   List<Map> playList = [];
+  //当前播放歌曲索引
+  int currentAudioIndex = -1;
 
   
   Future<void> _initImage() async {
@@ -65,21 +67,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  //图片点击事件
-  Future<void> _handleImageTap() async {
-      //点击图片后默认播放指定声音
-      // String url =  "https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3";
-      String url = "https://43.142.126.219/audio/16k16bit.mp3";
-      await player.setUrl(url);
-      player.play();
-      setState(() {
-        isPlaying = true;
-      });
+   //播放指定声音
+  Future<void> _handlePlayAudio(int index) async {
+    // String url =  "https://sis-sample-audio.obs.cn-north-1.myhuaweicloud.com/16k16bit.mp3";
+    String url = playList[index]["musicUrl"];
+    await player.setUrl(url);
+    player.play();
+    setState(() {
+      isPlaying = true;
+      currentAudioIndex = index;
+    });
   }
 
   //播放/暂停
   Future<void> togglePlayPause() async {
-    
+    if(currentAudioIndex == -1){
+      return;
+    }
 
     if (isPlaying) {
       await player.pause();
@@ -91,12 +95,20 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  //下一首
   void playNext() {
-    // Implement play next functionality
+    if(currentAudioIndex == -1 || (currentAudioIndex +  1) >= playList.length){
+      return;
+    }
+    _handlePlayAudio(currentAudioIndex + 1);
   }
 
+  //上一首
   void playPrevious() {
-    // Implement play previous functionality
+     if(currentAudioIndex == -1 || (currentAudioIndex - 1) <= 0){
+      return;
+    }
+    _handlePlayAudio(currentAudioIndex - 1);
   }
 
   //初始化图片页面
@@ -127,7 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     imageUrl: playList[index]["imageUrl"],
                   ),
                   child: ImageTile(
-                    onTap: _handleImageTap
+                    onTap: () async {
+                      _handlePlayAudio(index);
+                    }
                   ),
                 );
               },
